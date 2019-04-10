@@ -592,7 +592,7 @@ def xds_from_table_impl(table_name, table,
 
 
 def xds_from_table(table_name, columns=None,
-                   index_cols=None, group_cols=None,
+                   index_cols=None, group_cols=None, table_schema=None,
                    **kwargs):
     """
     Generator producing multiple :class:`xarray.Dataset` objects
@@ -716,7 +716,7 @@ def xds_from_table(table_name, columns=None,
     elif not isinstance(group_cols, list):
         group_cols = [group_cols]
 
-    with pt.table(table_name) as T:
+    with pt.table(table_name, **kwargs) as T:
         columns = set(T.colnames() if columns is None else columns)
 
         # Handle the case where we group on each table row
